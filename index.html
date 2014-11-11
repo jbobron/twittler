@@ -3,25 +3,52 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <script src="underbar.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
   <body>
-    <script>
+    <div class='button-nav'>
+      <button name="button">Get more tweets</button>
+    </div>
+    <nav>
+      <script>
+        $(document).ready(function(){
+          var $nav = $('nav');
+            $('button').on('click', function(){
+              $nav.html('');
+              var loadTweets = function(){
+                var index = streams.home.length - 1;
+                while(index >= 0){
+                  var tweet = streams.home[index];
+                  var $tweet = $('<div class="tweets"></div>');
 
-      $(document).ready(function(){
-        var $body = $('body');
-        $body.html('');
+                  $tweet.text('@' + tweet.user + ': ' + tweet.message + ' ' + tweet.created_at);
+                  //create hyperlink around tweet.user
 
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
-          index -= 1;
-        }
+                  $tweet.appendTo($nav);       
+                  index -= 1;
+                }
+              }
+              loadTweets();
+            });
+            
+        });
+      </script>
+    </nav>
 
-      });
-
-    </script>
   </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
