@@ -18,24 +18,44 @@
               $nav.html('');
               var loadTweets = function(){
                 var index = streams.home.length - 1;
+                var count = index;
                 while(index >= 0){
                   var tweet = streams.home[index];
-                  var $tweet = $('<div class="tweets"></div>');
-
-                  $tweet.text('@' + tweet.user + ': ' + tweet.message + ' ' + tweet.created_at);
-                  //create hyperlink around tweet.user
-
+                  var $tweet = $('<div id="tweet"></div>').addClass(tweet.user);
+                  var $message = '<a class="link" href="#">@'+tweet.user+' </a>'; 
+                  //google momment.js lib for time 
+                  $tweet.html($message + ': ' + tweet.message + ' ' + tweet.created_at).addClass();
+                  
                   $tweet.appendTo($nav);       
                   index -= 1;
                 }
               }
               loadTweets();
             });
-            
+
+            $('nav').on('click', '#tweet a', function(){
+              $nav.html('');
+              var myClass = $(this).parent().attr('class');
+              var loadUserTweets = function(){
+                var index = streams.home.length - 1;
+                var count = index;
+                while(index >= 0){
+                  var tweet = streams.home[index];
+                  var $tweet = $('<div id="tweet"></div>').addClass(tweet.user);
+                  console.log("TWEET.USER: " +tweet.user);
+                  if(myClass === tweet.user){
+                    var $message = '<a class="link" href="#">@'+tweet.user+' </a>'; 
+                    $tweet.html($message + ': ' + tweet.message + ' ' + tweet.created_at).addClass();
+                    $tweet.appendTo($nav);       
+                  }
+                  index -= 1;
+                }
+              }
+              loadUserTweets();
+            })  
         });
       </script>
     </nav>
-
   </body>
 </html>
 
